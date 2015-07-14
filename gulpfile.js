@@ -1,8 +1,11 @@
-var gulp   = require('gulp');
-var uglify = require('gulp-uglify');
-var concat = require('gulp-concat');
-var header = require('gulp-header');
-var pkg    = require('./package.json');
+'use strict';
+var gulp    = require('gulp');
+var uglify  = require('gulp-uglify');
+var concat  = require('gulp-concat');
+var header  = require('gulp-header');
+var espower = require('gulp-espower');
+var mocha   = require('gulp-mocha');
+var pkg     = require('./package.json');
 
 var BANNER = '/*! <%= name %> / @version:<%= version %> @author:<%= author %> @license:<%= license %> */ \n';
 
@@ -20,4 +23,10 @@ gulp.task('uglify', function() {
         .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('default', ['uglify']);
+gulp.task('test', function() {
+    gulp.src(['_test/test.js'])
+        .pipe(espower())
+        .pipe(mocha());
+});
+
+gulp.task('default', ['test', 'uglify']);
