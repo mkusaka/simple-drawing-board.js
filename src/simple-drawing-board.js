@@ -529,13 +529,17 @@ function _restoreFromHistory(goForth) {
 }
 
 // Export
-global.SimpleDrawingBoard = SimpleDrawingBoard;
-
+if ('process' in global) {
+    module.exports = SimpleDrawingBoard;
+}
 // for Require.js
-if (!('process' in global) && (typeof define === 'function' && define.amd)) {
+else if (typeof define === 'function' && define.amd) {
     define([], function() {
         return SimpleDrawingBoard;
     });
 }
+else {
+    global.SimpleDrawingBoard = SimpleDrawingBoard;
+}
 
-}(window));
+}(this.self || global));

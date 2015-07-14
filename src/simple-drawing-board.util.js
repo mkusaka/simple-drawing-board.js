@@ -1,11 +1,7 @@
 ;(function(global, undefined) {
 'use strict';
 
-if (!global.SimpleDrawingBoard) {
-    throw new Error('SimpleDrawingBoard is not defined in window.');
-}
-
-global.SimpleDrawingBoard.util = {
+var Util = {
     // 便利メソッドたち
     isTouch:         (isTouch()),
     isTransparent:   isTransparent,
@@ -37,6 +33,7 @@ global.SimpleDrawingBoard.util = {
  *     isTouchデバイス
  */
 function isTouch() {
+    if ('process' in global) { return false; }
     return 'ontouchstart' in global.document;
 }
 
@@ -166,4 +163,18 @@ Eve.prototype = {
     }
 };
 
-}(window));
+// Export
+if ('process' in global) {
+    module.exports = Util;
+}
+// for Require.js
+else if (typeof define === 'function' && define.amd) {
+    define([], function() {
+        return Util;
+    });
+}
+else {
+    global.SimpleDrawingBoard.util = Util;
+}
+
+}(this.self || global));
