@@ -5,9 +5,9 @@ declare class Eve {
 }
 
 declare class SimpleDrawingBoard {
-  get observer(): Eve;
-  get canvas(): HTMLCanvasElement;
-  get mode(): "draw" | "erase"
+  observer(): Eve;
+  canvas(): HTMLCanvasElement;
+  mode(): "draw" | "erase"
   setLineSize(size: number): void;
   setLineColor(color: string): void;
   fill(color: string): void;
